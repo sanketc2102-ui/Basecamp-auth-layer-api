@@ -30,6 +30,7 @@ const userSchema = new Schema(
       trim: true,
     },
     email: {
+      type: String,
       trim: true,
       required: true,
       unique: true,
@@ -70,13 +71,12 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.pre("save", async function hashedPassword(next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function hashedPassword() {
+  if (!this.isModified("password")) return;
 
   const hashedPassword = await bcrypt.hash(this.password, 10);
 
   this.password = hashedPassword;
-  next();
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {

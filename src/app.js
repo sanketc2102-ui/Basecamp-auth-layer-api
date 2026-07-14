@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { errorHander } from "./middlewares/error.middleware.js";
+import authRouter from "./routes/auth.routes.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -17,6 +19,10 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+app.use(cookieParser());
+
+app.use("/api/v1/auth", authRouter);
 
 // Global Error Handler
 app.use(errorHander);

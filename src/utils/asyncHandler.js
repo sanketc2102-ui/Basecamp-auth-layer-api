@@ -5,3 +5,5 @@ const asyncHander = (controller) => {
     );
   };
 };
+
+export { asyncHander };
